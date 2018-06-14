@@ -5,8 +5,23 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 using namespace std;
-
+struct Storage
+{
+	int Type;
+	vector<int> Memory;
+};
+struct Machine
+{
+	vector<char> CodeSpace;
+	Storage* CurrentStorage;
+	int xpos;
+	int ypos;
+	int dx;
+	int dy;
+	bool terminated;
+};
 int main()
 {
 	const char * filename="F:/CppHeui/main.text";
