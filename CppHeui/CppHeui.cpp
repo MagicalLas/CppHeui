@@ -33,9 +33,8 @@ int main()
 	ifstream infile(filename, fstream::in| fstream::out);
 	unsigned int h;
 
-	infile >> hex >> h;
-	cout << h;
-	int a;
-	cin>>a;
+	Machine machine{
+
+	};
 	return 0;
 }
