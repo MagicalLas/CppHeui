@@ -21,6 +21,8 @@ struct Machine
 	int dx;
 	int dy;
 	bool terminated;
+	int run(string code) {
+	}
 };
 int main()
 {
