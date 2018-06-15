@@ -204,8 +204,6 @@ struct Machine
 	int dy;
 	bool terminated;
 	int run(string code) {
-	};
-	int initCodespace() {
 		vector<Char> codeSpace; // will init function use
 		this->CodeSpace = codeSpace;
 
@@ -218,6 +216,9 @@ struct Machine
 		}
 
 		return res;
+	};
+	int initCodespace() {
+		
 	};
 };
 
