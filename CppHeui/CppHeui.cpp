@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 using namespace std;
-auto HeadFindNum(wchar_t * s) ->int{
+auto strokeCount(wchar_t * s) ->int{
 	switch (*s)
 	{
 
@@ -201,7 +201,7 @@ int main()
 	setlocale(LC_ALL, "Korean");
 	printf("%S", buffer);
 
-	cout<<num_i(L"ㄴ");
+	cout<<strokeCount(L"ㄴ");
 	cin >> h;
 	//Machine machine{};
 	
