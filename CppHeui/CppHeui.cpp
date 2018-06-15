@@ -181,14 +181,22 @@ int BreakHan(wchar_t *str, wchar_t *buffer,unsigned int nSize)
 	return pos;
 }
 
+struct Char
+{
+	wchar_t Lead;
+	wchar_t Vowel;
+	wchar_t Tail;
+};
+
 struct Storage
 {
 	int Type;
 	vector<int> Memory;
 };
+
 struct Machine
 {
-	vector<char> CodeSpace;
+	vector<Char> CodeSpace; // use like 2d array
 	Storage* CurrentStorage;
 	int xpos;
 	int ypos;
@@ -196,13 +204,31 @@ struct Machine
 	int dy;
 	bool terminated;
 	int run(string code) {
-	}
+	};
+	int initCodespace() {
+		vector<Char> codeSpace; // will init function use
+		this->CodeSpace = codeSpace;
+
+		auto res = 0;
+		auto Flag = false;
+
+		while (Flag) {
+			res; // will update
+			Flag = this->terminated;
+		}
+
+		return res;
+	};
 };
+
+
+
 int main()
 {
 	cout << "Start of Program" << endl;
 	
 	Machine machine{};
-	
+	machine.initCodespace();
+
 	return 0;
 }
