@@ -217,8 +217,12 @@ struct Machine
 
 		return res;
 	};
-	vector<Char> initCodespace() {
-		return vector<Char>();
+	vector<Char> initCodespace(wchar_t * code) {
+
+		vector<Char> line;
+		vector<Char> CodeSpace; // [ line, line, line ]
+
+
 	};
 };
 
