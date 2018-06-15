@@ -86,7 +86,7 @@ int main()
 
 	
 	string h; 
-	wchar_t *str = L"Laplace Desire, 하원호, 프로그래머. 천재가 되고 싶은 사람임.";
+	wchar_t *str = L"Laplace Desire, 하원호, 프로그래머.";
 	wchar_t buffer[10];
 
 	BreakHan(str, buffer, sizeof buffer);
