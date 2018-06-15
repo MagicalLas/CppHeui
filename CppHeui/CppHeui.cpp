@@ -9,6 +9,9 @@
 #include <string>
 #include <vector>
 using namespace std;
+
+//wchar to int
+//int is method
 auto strokeCount(wchar_t * s) ->int{
 	switch (*s)
 	{
@@ -57,6 +60,7 @@ auto strokeCount(wchar_t * s) ->int{
 	return -1;
 }
 
+//wchar to int
 auto stackIndices(wchar_t * s) -> int{
 	switch (*s)
 	{
@@ -139,6 +143,14 @@ L'ㅁ', L'ㅂ', L'ㅄ', L'ㅅ',
 L'ㅆ', L'ㅇ', L'ㅈ', L'ㅊ',
 L'ㅋ', L'ㅌ', L'ㅍ', L'ㅎ' };
 
+/**
+*
+>use case<
+BreakHan(str, buffer, sizeof buffer);
+setlocale(LC_ALL, "Korean");
+printf("%S", buffer);
+*
+*/
 int BreakHan(wchar_t *str, wchar_t *buffer,unsigned int nSize)
 {
 	unsigned int pos = 0;
@@ -188,22 +200,9 @@ struct Machine
 };
 int main()
 {
-	const char * filename="F:/CppHeui/main.text";
-	cout << "Hello CMake." << endl;
-	cout << filename << endl;	
-
+	cout << "Start of Program" << endl;
 	
-	string h; 
-	wchar_t *str = L"Laplace Desire, 하원호, 프로그래머.";
-	wchar_t buffer[100];
-
-	BreakHan(str, buffer, sizeof buffer);
-	setlocale(LC_ALL, "Korean");
-	printf("%S", buffer);
-
-	cout<<strokeCount(L"ㄴ");
-	cin >> h;
-	//Machine machine{};
+	Machine machine{};
 	
 	return 0;
 }
