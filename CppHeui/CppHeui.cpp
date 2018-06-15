@@ -15,6 +15,38 @@ L'ㄸ', L'ㄹ', L'ㅁ', L'ㅂ',
 L'ㅃ', L'ㅅ', L'ㅆ', L'ㅇ',
 L'ㅈ', L'ㅉ', L'ㅊ', L'ㅋ',
 L'ㅌ', L'ㅍ', L'ㅎ' };
+int num_i(wchar_t * s){
+	switch (*s)
+	{
+	case L'ㄱ':
+		return 1;
+	case L'ㄴ':
+		return 2;
+	case L'ㄷ':
+		return 3;
+	case L'ㄹ':
+		return 4;
+	case L'ㅁ':
+		return 5;
+	case L'ㅂ':
+		return 6;
+	case L'ㅅ':
+		return 7;
+	case L'ㅇ':
+		return 8;
+	case L'ㅈ':
+		return 9;
+	case L'ㅊ':
+		return 10;
+	case L'ㅋ':
+		return 11;
+	case L'ㅌ':
+		return 12;
+	default:
+		break;
+	}
+	return 1;
+}
 
 //중성 
 static const wchar_t wcMid[] = { L'ㅏ', L'ㅐ', L'ㅑ', L'ㅒ',
@@ -87,13 +119,15 @@ int main()
 	
 	string h; 
 	wchar_t *str = L"Laplace Desire, 하원호, 프로그래머.";
-	wchar_t buffer[10];
+	wchar_t buffer[100];
 
 	BreakHan(str, buffer, sizeof buffer);
 	setlocale(LC_ALL, "Korean");
 	printf("%S", buffer);
+
+	cout<<num_i(L"ㄴ");
 	cin >> h;
-	Machine machine{};
+	//Machine machine{};
 	
 	return 0;
 }
