@@ -61,7 +61,7 @@ auto strokeCount(wchar_t s) ->int{
 }
 
 //wchar to int
-auto stackIndices(wchar_t s) -> int{
+auto stackIndices(wchar_t & s) -> int{
 	switch (s)
 	{
 	case L' ':
@@ -151,7 +151,7 @@ setlocale(LC_ALL, "Korean");
 printf("%S", buffer);
 *
 */
-int BreakHan(wchar_t *str, wstring buffer,unsigned int nSize)
+int BreakHan(wchar_t *str, wchar_t * buffer,unsigned int nSize)
 {
 	unsigned int pos = 0;
 	while (*str != '\0')
@@ -176,7 +176,7 @@ int BreakHan(wchar_t *str, wstring buffer,unsigned int nSize)
 		}
 		++str;
 	}
-
+	buffer[pos] = '\0';
 	return pos;
 }
 
@@ -228,7 +228,8 @@ struct Machine
 	};
 };
 
-
+template<class T>
+class TD;
 
 int main()
 {
@@ -237,11 +238,12 @@ int main()
 	setlocale(LC_ALL, "Korean");
 
 	Machine machine{};
-	wstring str=L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-	BreakHan(L"하원호의 프로그램\n 가나다", str, 60);
+	wchar_t str[2000]=L"ㄱㄴㄷㄱㄴㄷ";
+//	BreakHan(L"하원호의 프로그램\n 가나다", str, 60);
 //	machine.run(str);
 	string s;
-	cout << stackIndices(L'ㄴ');
+	cout << stackIndices(str[0]);
+
 	cin >> s;
 	return 0;
 }
