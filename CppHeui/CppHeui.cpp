@@ -61,8 +61,8 @@ auto strokeCount(wchar_t * s) ->int{
 }
 
 //wchar to int
-auto stackIndices(wchar_t * s) -> int{
-	switch (*s)
+auto stackIndices(wchar_t s) -> int{
+	switch (s)
 	{
 	case L' ':
 		return 0;
@@ -151,7 +151,7 @@ setlocale(LC_ALL, "Korean");
 printf("%S", buffer);
 *
 */
-int BreakHan(wchar_t *str, wchar_t *buffer,unsigned int nSize)
+int BreakHan(wchar_t *str, wstring buffer,unsigned int nSize)
 {
 	unsigned int pos = 0;
 	while (*str != '\0')
@@ -177,7 +177,6 @@ int BreakHan(wchar_t *str, wchar_t *buffer,unsigned int nSize)
 		++str;
 	}
 
-	buffer[pos] = '\0';
 	return pos;
 }
 
@@ -203,8 +202,8 @@ struct Machine
 	int dx;
 	int dy;
 	bool terminated;
-	int run(string code) {
-		vector<Char> codeSpace = initCodespace();
+	int run(wchar_t * code) {
+		vector<Char> codeSpace = initCodespace(code);
 		this->CodeSpace = codeSpace;
 
 		auto res = 0;
@@ -222,7 +221,10 @@ struct Machine
 		vector<Char> line;
 		vector<Char> CodeSpace; // [ line, line, line ]
 
+		for (int lineIdx = 0; lineIdx < 9; lineIdx++) {
 
+		}
+		return CodeSpace;
 	};
 };
 
@@ -231,9 +233,15 @@ struct Machine
 int main()
 {
 	cout << "Start of Program" << endl;
-	
-	Machine machine{};
-	machine.initCodespace();
 
+	setlocale(LC_ALL, "Korean");
+
+	Machine machine{};
+	wstring str=L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+	BreakHan(L"하원호의 프로그램\n 가나다", str, 60);
+//	machine.run(str);
+	string s;
+	cout << stackIndices((str[1]));
+	cin >> s;
 	return 0;
 }
