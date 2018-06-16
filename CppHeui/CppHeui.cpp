@@ -12,8 +12,8 @@ using namespace std;
 
 //wchar to int
 //int is method
-auto strokeCount(wchar_t * s) ->int{
-	switch (*s)
+auto strokeCount(wchar_t s) ->int{
+	switch (s)
 	{
 
 	case L'ㄱ':
@@ -241,7 +241,7 @@ int main()
 	BreakHan(L"하원호의 프로그램\n 가나다", str, 60);
 //	machine.run(str);
 	string s;
-	cout << stackIndices((str[1]));
+	cout << stackIndices(L'ㄴ');
 	cin >> s;
 	return 0;
 }
