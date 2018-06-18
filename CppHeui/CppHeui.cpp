@@ -2,12 +2,9 @@
 //
 
 #include "CppHeui.h"
-#include <iostream>
-#include <fstream>
-#include "windows.h"
-#include "locale.h" 
-#include <string>
 #include <vector>
+#include <iostream>
+#include <string>
 using namespace std;
 
 //wchar to int
@@ -151,7 +148,7 @@ setlocale(LC_ALL, "Korean");
 printf("%S", buffer);
 *
 */
-int BreakHan(wchar_t *str, wchar_t * buffer,unsigned int nSize)
+int BreakHan(wchar_t *str, wchar_t *buffer,unsigned int nSize)
 {
 	unsigned int pos = 0;
 	while (*str != '\0')
@@ -185,6 +182,9 @@ struct Char
 	wchar_t Lead;
 	wchar_t Vowel;
 	wchar_t Tail;
+	auto print() -> void {
+		wcout << Lead << " : " << Vowel << " : " << Tail << endl;
+	}
 };
 
 struct Storage
@@ -231,19 +231,28 @@ struct Machine
 template<class T>
 class TD;
 
+auto wcharToChar(wchar_t word) -> Char {
+	Char w;
+	w.Lead = wcHead[(word - 0xAC00) / (21 * 28)];
+	w.Vowel = wcMid[(word - 0xAC00) % (21 * 28) / 28];
+	w.Tail = wcTail[(word - 0xAC00) % 28];
+	return w;
+}
+auto init()-> void {
+	cout << "Start of Program" << endl;
+	setlocale(LC_ALL, "Korean");
+};
 int main()
 {
-	cout << "Start of Program" << endl;
-
-	setlocale(LC_ALL, "Korean");
+	init();
 
 	Machine machine{};
-	wchar_t str[2000]=L"ㄱㄴㄷㄱㄴㄷ";
-//	BreakHan(L"하원호의 프로그램\n 가나다", str, 60);
+	wstring str=L"가밣따빠밣밟따뿌";
+	vector<Char> code;
 //	machine.run(str);
-	string s;
-	cout << stackIndices(str[0]);
+	code.push_back(wcharToChar(str[1]));
 
+	string s;
 	cin >> s;
 	return 0;
 }
