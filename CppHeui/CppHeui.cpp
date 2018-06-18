@@ -164,14 +164,14 @@ struct Storage
 struct Machine
 {
 	vector<Char> CodeSpace; // use like 2d array
-	Storage* CurrentStorage;
+	unique_ptr<Storage> CurrentStorage;
 	int xpos;
 	int ypos;
 	int dx;
 	int dy;
 	bool terminated;
-	int run(wchar_t * code) = delete;
-	vector<Char> initCodespace(wchar_t * code)=delete;
+	int run(wstring code) = delete;
+	vector<Char> initCodespace(wstring code)=delete;
 };
 
 template<class T>
@@ -203,6 +203,7 @@ int main()
 	vector<Char> code;
 	code.push_back(wcharToChar(str[7]));
 	wcharToChar(L'\n').print();
+
 	string s;
 	cin >> s;
 	return 0;
