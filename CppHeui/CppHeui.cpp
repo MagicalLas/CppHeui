@@ -145,8 +145,13 @@ struct Char
 	wchar_t Lead;
 	wchar_t Vowel;
 	wchar_t Tail;
+	bool border;
 	auto print() -> void {
-		wcout << Lead << " : " << Vowel << " : " << Tail << endl;
+		if (!border)
+			wcout << Lead << " : " << Vowel << " : " << Tail << endl;
+		else {
+			cout << "Border" << endl;
+		}
 	}
 };
 
@@ -172,8 +177,12 @@ struct Machine
 template<class T>
 class TD;
 
-auto wcharToChar(wchar_t word) -> Char {
+auto wcharToChar(wchar_t word) -> Char& {
+
 	Char w;
+	w.border = false;
+	if (word == '\n')
+		w.border = true;
 	w.Lead = wcHead[(word - 0xAC00) / (21 * 28)];
 	w.Vowel = wcMid[(word - 0xAC00) % (21 * 28) / 28];
 	w.Tail = wcTail[(word - 0xAC00) % 28];
@@ -192,9 +201,8 @@ int main()
 	Machine machine{};
 	wstring str=L"가밣따빠밣밟따뿌";
 	vector<Char> code;
-//	machine.run(str);
-	code.push_back(wcharToChar(str[1]));
-
+	code.push_back(wcharToChar(str[7]));
+	wcharToChar(L'\n').print();
 	string s;
 	cin >> s;
 	return 0;
