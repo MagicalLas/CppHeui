@@ -140,43 +140,6 @@ L'ㅁ', L'ㅂ', L'ㅄ', L'ㅅ',
 L'ㅆ', L'ㅇ', L'ㅈ', L'ㅊ',
 L'ㅋ', L'ㅌ', L'ㅍ', L'ㅎ' };
 
-/**
-*
->use case<
-BreakHan(str, buffer, sizeof buffer);
-setlocale(LC_ALL, "Korean");
-printf("%S", buffer);
-*
-*/
-int BreakHan(wchar_t *str, wchar_t *buffer,unsigned int nSize)
-{
-	unsigned int pos = 0;
-	while (*str != '\0')
-	{
-		if (*str < 256)
-		{
-			if (pos + 2 >= nSize - 1)
-				break;
-
-			buffer[pos] = *str;
-			++pos;
-		}
-		else
-		{
-			if (pos + 4 >= nSize - 1)
-				break;
-
-			buffer[pos] = wcHead[(*str - 0xAC00) / (21 * 28)];
-			buffer[pos + 1] = wcMid[(*str - 0xAC00) % (21 * 28) / 28];
-			buffer[pos + 2] = wcTail[(*str - 0xAC00) % 28];
-			pos += 3;
-		}
-		++str;
-	}
-	buffer[pos] = '\0';
-	return pos;
-}
-
 struct Char
 {
 	wchar_t Lead;
@@ -202,30 +165,8 @@ struct Machine
 	int dx;
 	int dy;
 	bool terminated;
-	int run(wchar_t * code) {
-		vector<Char> codeSpace = initCodespace(code);
-		this->CodeSpace = codeSpace;
-
-		auto res = 0;
-		auto Flag = false;
-
-		while (Flag) {
-			res; // will update
-			Flag = this->terminated;
-		}
-
-		return res;
-	};
-	vector<Char> initCodespace(wchar_t * code) {
-
-		vector<Char> line;
-		vector<Char> CodeSpace; // [ line, line, line ]
-
-		for (int lineIdx = 0; lineIdx < 9; lineIdx++) {
-
-		}
-		return CodeSpace;
-	};
+	int run(wchar_t * code) = delete;
+	vector<Char> initCodespace(wchar_t * code)=delete;
 };
 
 template<class T>
@@ -237,11 +178,13 @@ auto wcharToChar(wchar_t word) -> Char {
 	w.Vowel = wcMid[(word - 0xAC00) % (21 * 28) / 28];
 	w.Tail = wcTail[(word - 0xAC00) % 28];
 	return w;
-}
+};
+
 auto init()-> void {
 	cout << "Start of Program" << endl;
 	setlocale(LC_ALL, "Korean");
 };
+
 int main()
 {
 	init();
