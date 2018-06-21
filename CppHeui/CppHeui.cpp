@@ -176,7 +176,7 @@ struct CodeInterpreter
 {
 	stack<int> storage;
 
-	auto stackCheck() -> bool{
+	auto stackCheck() -> bool {
 		if (storage.size() < 2) {
 			cout << "Memory Was Not Enough" << endl;
 		}
@@ -202,25 +202,25 @@ struct CodeInterpreter
 			exit(0);
 			break;
 		case L'ㄷ': {
-			stackCal([](int a, int b)->int {
+			stackCal([](int a, int b) -> int {
 				return a + b;
 			});
 			break;
 		}
 		case L'ㄸ': {
-			stackCal([](int a, int b)->int {
+			stackCal([](int a, int b) -> int {
 				return a * b; 
 			});
 			break;
 		}
 		case L'ㅌ': {
-			stackCal([](int a, int b)->int {
+			stackCal([](int a, int b) -> int {
 				return a - b;
 			});
 			break;
 		}
 		case L'ㄴ': {
-			stackCal([](int a, int b)->int {
+			stackCal([](int a, int b) -> int {
 				return a / b;
 			});
 			break;
@@ -231,7 +231,7 @@ struct CodeInterpreter
 		}
 		return true;
 	}
-	auto analyseMiddle(wchar_t middle, State& state) -> bool{
+	auto analyseMiddle(wchar_t middle, State& state) -> bool {
 		switch (middle)
 		{
 		case L'ㅏ':
@@ -270,13 +270,13 @@ struct CodeInterpreter
 		return true;
 	}
 };
-auto print(Printable* object)noexcept  -> void {
-	cout<<object->toString()<<endl;
+auto print(Printable* object) noexcept -> void {
+	cout << object->toString() << endl;
 }
 template<class T>
 class TD;
 
-auto wcharToChar(wchar_t word)noexcept  -> Char& {
+auto wcharToChar(wchar_t word) noexcept -> Char& {
 
 	Char w;
 	w.border = false;
@@ -289,7 +289,7 @@ auto wcharToChar(wchar_t word)noexcept  -> Char& {
 	return w;
 };
 
-auto init()noexcept -> void {
+auto init() noexcept -> void {
 	cout << "Start of Programs" << endl;
 	setlocale(LC_ALL, "Korean");
 };
