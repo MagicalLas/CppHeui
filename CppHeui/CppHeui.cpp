@@ -147,7 +147,7 @@ struct Char
 	wchar_t Vowel;
 	wchar_t Tail;
 	bool border;
-	auto print() -> void {
+	auto print() noexcept -> void {
 		if (!border)
 			wcout << Lead << " : " << Vowel << " : " << Tail << endl;
 		else {
@@ -168,7 +168,7 @@ struct State : Printable
 		cx = 0;
 		cy = 0;
 	}
-	auto toString() -> string override {
+	auto toString() noexcept -> string override {
 		return "STATE : " + to_string(cx) + ", " + to_string(cy);
 	}
 };
@@ -266,13 +266,13 @@ struct CodeInterpreter
 		return true;
 	}
 };
-auto print(Printable* object) -> void {
+auto print(Printable* object)noexcept  -> void {
 	cout<<object->toString()<<endl;
 }
 template<class T>
 class TD;
 
-auto wcharToChar(wchar_t word) -> Char& {
+auto wcharToChar(wchar_t word)noexcept  -> Char& {
 
 	Char w;
 	w.border = false;
@@ -285,7 +285,7 @@ auto wcharToChar(wchar_t word) -> Char& {
 	return w;
 };
 
-auto init()-> void {
+auto init()noexcept -> void {
 	cout << "Start of Programs" << endl;
 	setlocale(LC_ALL, "Korean");
 };
