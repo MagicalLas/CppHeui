@@ -175,6 +175,22 @@ struct State : Printable
 struct CodeInterpreter
 {
 	stack<int> storage;
+
+	auto stackCheck() -> bool{
+		if (storage.size() < 2) {
+			cout << "Memory Was Not Enough" << endl;
+		}
+		return (storage.size() < 2);
+	}
+	auto stackCal(int(*f)(int a, int b)) -> void {
+		if (stackCheck())
+			return;
+		auto a = storage.top();
+		storage.pop();
+		auto b = storage.top();
+		storage.pop();
+		storage.push(f(a,b));
+	}
 	auto run(Char code, State& state) -> void{
 
 		
@@ -186,39 +202,27 @@ struct CodeInterpreter
 			exit(0);
 			break;
 		case L'ㄷ': {
-			if (storage.size() < 2) {
-				cout << "Memory Was Not Enough" << endl;
-				break;
-			}
-			auto a = storage.top();
-			storage.pop();
-			auto b = storage.top();
-			storage.pop();
-			storage.push(a + b);
+			stackCal([](int a, int b)->int {
+				return a + b;
+			});
 			break;
 		}
 		case L'ㄸ': {
-			if (storage.size() < 2) {
-				cout << "Memory Was Not Enough" << endl;
-				break;
-			}
-			auto a = storage.top();
-			storage.pop();
-			auto b = storage.top();
-			storage.pop();
-			storage.push(a * b);
+			stackCal([](int a, int b)->int {
+				return a * b; 
+			});
 			break;
 		}
 		case L'ㅌ': {
-			if (storage.size() < 2) {
-				cout << "Memory Was Not Enough" << endl;
-				break;
-			}
-			auto a = storage.top();
-			storage.pop();
-			auto b = storage.top();
-			storage.pop();
-			storage.push(a - b);
+			stackCal([](int a, int b)->int {
+				return a - b;
+			});
+			break;
+		}
+		case L'ㄴ': {
+			stackCal([](int a, int b)->int {
+				return a / b;
+			});
 			break;
 		}
 
@@ -296,7 +300,7 @@ int main()
 	CodeInterpreter interpre;
 	State st;
 	interpre.analyseMiddle(L'ㅏ', st);
-	interpre.analyseHead(L'ㄸ');
+	interpre.analyseHead(L'ㅌ');
 	interpre.analyseMiddle(L'ㅠ', st);
 	interpre.analyseMiddle(L'ㅜ', st);
 
