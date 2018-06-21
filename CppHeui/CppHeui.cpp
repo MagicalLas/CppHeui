@@ -179,19 +179,49 @@ struct CodeInterpreter
 
 		
 	}
-	auto analyseHead(wchar_t head) -> bool {
+	auto analyseHead(wchar_t head) noexcept -> bool {
 		switch (head)
 		{
 		case L'ㅎ':
 			exit(0);
 			break;
 		case L'ㄷ': {
+			if (storage.size() < 2) {
+				cout << "Memory Was Not Enough" << endl;
+				break;
+			}
 			auto a = storage.top();
 			storage.pop();
 			auto b = storage.top();
 			storage.pop();
 			storage.push(a + b);
+			break;
 		}
+		case L'ㄸ': {
+			if (storage.size() < 2) {
+				cout << "Memory Was Not Enough" << endl;
+				break;
+			}
+			auto a = storage.top();
+			storage.pop();
+			auto b = storage.top();
+			storage.pop();
+			storage.push(a * b);
+			break;
+		}
+		case L'ㅌ': {
+			if (storage.size() < 2) {
+				cout << "Memory Was Not Enough" << endl;
+				break;
+			}
+			auto a = storage.top();
+			storage.pop();
+			auto b = storage.top();
+			storage.pop();
+			storage.push(a - b);
+			break;
+		}
+
 		default:
 			break;
 		}
@@ -266,7 +296,7 @@ int main()
 	CodeInterpreter interpre;
 	State st;
 	interpre.analyseMiddle(L'ㅏ', st);
-	interpre.analyseHead(L'ㅎ', st);
+	interpre.analyseHead(L'ㄸ');
 	interpre.analyseMiddle(L'ㅠ', st);
 	interpre.analyseMiddle(L'ㅜ', st);
 
