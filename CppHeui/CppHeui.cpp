@@ -189,6 +189,7 @@ struct CodeInterpreter
 		storage.pop();
 		auto b = storage.top();
 		storage.pop();
+		cout << a << ":" << b << endl;
 		storage.push(f(a,b));
 	}
 	//ㅂ명령 도움 함수.
@@ -199,7 +200,7 @@ struct CodeInterpreter
 			cin >> inputData;
 			storage.push(inputData);
 		}
-		if (data == L'ㅎ')
+		else if (data == L'ㅎ')
 		{
 			wchar_t inputData;
 			wcin >> inputData;
@@ -337,9 +338,12 @@ int main()
 	init();
 	CodeInterpreter interpre;
 	State st;
-	interpre.analyseHead(wcharToChar(L'밯'));
-	interpre.analyseHead(wcharToChar(L'밯'));
-	interpre.analyseHead(wcharToChar(L'맣'));
+	interpre.analyseHead(wcharToChar(L'방'));
+	interpre.analyseHead(wcharToChar(L'방'));
+	interpre.analyseHead(wcharToChar(L'방'));
+	interpre.analyseHead(wcharToChar(L'따'));
+	interpre.analyseHead(wcharToChar(L'망'));
+
 	print(&st);
 	
 
