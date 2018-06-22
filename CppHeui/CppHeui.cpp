@@ -181,10 +181,18 @@ struct State : Printable
 };
 struct CodeInterpreter
 {
-	stack<int> nowStorage;
+	stack<int> & nowStorage;
 	vector< stack<int> > otherStorage;
+	auto changeStack(wchar_t index) -> void {
+		auto stackIndex = stackIndices(index);
+		nowStorage = otherStorage[stackIndex];
+	}
 
+	auto changeStack(wchar_t index, int data) -> void {
+		auto stackIndex = stackIndices(index);
+		otherStorage[stackIndex].push(data);
 
+	}
 	//스택에 값이 2개 이상 있는지 확인하는 함수
 	auto stackCheck() -> bool {
 		if (nowStorage.size() < 2) {
@@ -293,6 +301,12 @@ struct CodeInterpreter
 			break;
 		case L'ㅍ':
 			stackInput(code.Lead);
+			break;
+		case L'ㅅ':
+			changeStack(code.Tail);
+			break;
+		case L'ㅆ':
+			changeStack(code.Tail, int data);
 			break;
 		default:
 			break;
