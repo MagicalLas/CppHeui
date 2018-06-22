@@ -190,8 +190,8 @@ struct CodeInterpreter
 
 	auto changeStack(wchar_t index, int data) -> void {
 		auto stackIndex = stackIndices(index);
-		otherStorage[stackIndex].push(data);
-
+		nowStorage = otherStorage[stackIndex];
+		nowStorage.push(data);
 	}
 	//스택에 값이 2개 이상 있는지 확인하는 함수
 	auto stackCheck() -> bool {
@@ -306,7 +306,8 @@ struct CodeInterpreter
 			changeStack(code.Tail);
 			break;
 		case L'ㅆ':
-			changeStack(code.Tail, int data);
+			auto data = nowStorage.top();
+			changeStack(code.Tail, data);
 			break;
 		default:
 			break;
