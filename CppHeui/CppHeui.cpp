@@ -1,5 +1,11 @@
-﻿// CppHeui.cpp : 응용 프로그램의 진입점을 정의합니다.
-//
+﻿/*************************************************************************
+> File Name: CppHeui.cpp
+> Project Name: CppHeui
+> Author: Wonho Ha aka Las
+> Purpose: Ahuei for cpp
+> Created Time: 2018/06/22
+> Copyright (c) 2018, Wonho-Ha aka Las
+*************************************************************************/
 
 #include "CppHeui.h"
 #include <vector>
@@ -140,7 +146,7 @@ L'ㄽ', L'ㄾ', L'ㄿ', L'ㅀ',
 L'ㅁ', L'ㅂ', L'ㅄ', L'ㅅ',
 L'ㅆ', L'ㅇ', L'ㅈ', L'ㅊ',
 L'ㅋ', L'ㅌ', L'ㅍ', L'ㅎ' };
-
+//문자열을 분해
 struct Char
 {
 	wchar_t Lead;
@@ -155,11 +161,12 @@ struct Char
 		}
 	}
 };
-
+//출력가능 객체
 struct Printable
 {
 	virtual auto toString()->string = 0;
 };
+//현재 상태
 struct State : Printable
 {
 	int cx;
@@ -175,13 +182,14 @@ struct State : Printable
 struct CodeInterpreter
 {
 	stack<int> storage;
-
+	//스택에 값이 2개 이상 있는지 확인하는 함수
 	auto stackCheck() -> bool {
 		if (storage.size() < 2) {
 			cout << "Memory Was Not Enough" << endl;
 		}
 		return (storage.size() < 2);
 	}
+	//스택에서 두 값을 꺼내고 계산하는 함수
 	auto stackCal(int(*f)(int a, int b)) -> void {
 		if (stackCheck())
 			return;
@@ -192,7 +200,7 @@ struct CodeInterpreter
 		cout << a << ":" << b << endl;
 		storage.push(f(a,b));
 	}
-	//ㅂ명령 도움 함수.
+	//스택에 값을 넣기위한 함수
 	auto stackInput(wchar_t data)-> void {
 		if (data == L'ㅇ')
 		{
@@ -329,13 +337,18 @@ struct CodeInterpreter
 		return true;
 	}
 };
+
+//출력가능한 객체를 출력하는 함수
 auto print(Printable* object) noexcept -> void {
 	cout << object->toString() << endl;
 }
 
+//Type을 보기위한 가상객체.
 template<class T>
 class TD;
 
+//wchar_T를 분해하여 Char를 생성한다.
+//줄의 끝이라면('\n') border가 0이다.
 auto wcharToChar(wchar_t word) noexcept -> Char& {
 
 	Char w;
@@ -349,6 +362,7 @@ auto wcharToChar(wchar_t word) noexcept -> Char& {
 	return w;
 };
 
+//초기 설정을 하는 함수.
 auto init() noexcept -> void {
 	cout << "Start of Programs" << endl;
 	setlocale(LC_ALL, "Korean");
