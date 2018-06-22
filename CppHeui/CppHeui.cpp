@@ -210,6 +210,17 @@ struct CodeInterpreter
 		{
 			storage.push(storage.top());
 		}
+		else if (data == L'ㅍ')
+		{
+			if (stackCheck())
+				return;
+			auto a = storage.top();
+			storage.pop();
+			auto b = storage.top();
+			storage.pop();
+			storage.push(a);
+			storage.push(b);
+		}
 		else {
 			storage.push(stackIndices(data));
 		}
@@ -267,8 +278,10 @@ struct CodeInterpreter
 		case L'ㅁ':
 			stackOut(code.Tail);
 			break;
-
 		case L'ㅃ':
+			stackInput(code.Lead);
+			break;
+		case L'ㅍ':
 			stackInput(code.Lead);
 			break;
 		default:
