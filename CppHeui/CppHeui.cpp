@@ -205,7 +205,21 @@ struct CodeInterpreter
 			wcin >> inputData;
 			storage.push(inputData);
 		}
+		else {
+			storage.push(stackIndices(data));
+		}
 
+	}
+	auto stackOut(wchar_t data) -> void {
+		if (data == L'ㅇ')
+		{
+			cout << storage.top();
+		}
+		if (data == L'ㅎ')
+		{
+			wcout << (wchar_t)storage.top();
+		}
+		storage.pop();
 	}
 	//명령 실행 코드
 	auto run(Char code, State& state) -> void{
@@ -237,16 +251,17 @@ struct CodeInterpreter
 			});
 			break;
 		}
-		case L'ㄴ': {
+		case L'ㄴ':
 			stackCal([](int a, int b) -> int {
 				return a / b;
 			});
 			break;
-		}
-		case L'ㅂ': {
+		case L'ㅂ':
 			stackInput(code.Tail);
 			break;
-		}
+		case L'ㅁ':
+			stackOut(code.Tail);
+			break;
 		default:
 			break;
 		}
@@ -322,10 +337,9 @@ int main()
 	init();
 	CodeInterpreter interpre;
 	State st;
-	interpre.analyseHead(wcharToChar(L'방'));
-	interpre.analyseHead(wcharToChar(L'방'));
-	interpre.analyseHead(wcharToChar(L'방'));
-	interpre.analyseHead(wcharToChar(L'다'));
+	interpre.analyseHead(wcharToChar(L'밯'));
+	interpre.analyseHead(wcharToChar(L'밯'));
+	interpre.analyseHead(wcharToChar(L'맣'));
 	print(&st);
 	
 
