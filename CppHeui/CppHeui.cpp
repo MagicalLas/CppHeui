@@ -191,12 +191,30 @@ struct CodeInterpreter
 		storage.pop();
 		storage.push(f(a,b));
 	}
+	//ㅂ명령 도움 함수.
+	auto stackInput(wchar_t data)-> void {
+		if (data == L'ㅇ')
+		{
+			int inputData=0;
+			cin >> inputData;
+			storage.push(inputData);
+		}
+		if (data == L'ㅎ')
+		{
+			wchar_t inputData;
+			wcin >> inputData;
+			storage.push(inputData);
+		}
+
+	}
+	//명령 실행 코드
 	auto run(Char code, State& state) -> void{
 
 		
 	}
-	auto analyseHead(wchar_t head) noexcept -> bool {
-		switch (head)
+	//첫소리 분석 코드
+	auto analyseHead(Char code) noexcept -> bool {
+		switch (code.Lead)
 		{
 		case L'ㅎ':
 			exit(0);
@@ -225,12 +243,16 @@ struct CodeInterpreter
 			});
 			break;
 		}
-
+		case L'ㅂ': {
+			stackInput(code.Tail);
+			break;
+		}
 		default:
 			break;
 		}
 		return true;
 	}
+	//모음 분석 함수
 	auto analyseMiddle(wchar_t middle, State& state) -> bool {
 		switch (middle)
 		{
@@ -273,6 +295,7 @@ struct CodeInterpreter
 auto print(Printable* object) noexcept -> void {
 	cout << object->toString() << endl;
 }
+
 template<class T>
 class TD;
 
@@ -299,12 +322,12 @@ int main()
 	init();
 	CodeInterpreter interpre;
 	State st;
-	interpre.analyseMiddle(L'ㅏ', st);
-	interpre.analyseHead(L'ㅌ');
-	interpre.analyseMiddle(L'ㅠ', st);
-	interpre.analyseMiddle(L'ㅜ', st);
-
+	interpre.analyseHead(wcharToChar(L'방'));
+	interpre.analyseHead(wcharToChar(L'방'));
+	interpre.analyseHead(wcharToChar(L'방'));
+	interpre.analyseHead(wcharToChar(L'다'));
 	print(&st);
+	
 
 	string s;
 	cin >> s;
