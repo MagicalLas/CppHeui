@@ -230,7 +230,7 @@ struct CodeInterpreter
 			storage.push(b);
 		}
 		else {
-			storage.push(stackIndices(data));
+			storage.push(strokeCount(data));
 		}
 
 	}
