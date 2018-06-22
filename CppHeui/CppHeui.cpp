@@ -181,24 +181,26 @@ struct State : Printable
 };
 struct CodeInterpreter
 {
-	stack<int> storage;
+	stack<int> nowStorage;
+	vector< stack<int> > otherStorage;
+
+
 	//스택에 값이 2개 이상 있는지 확인하는 함수
 	auto stackCheck() -> bool {
-		if (storage.size() < 2) {
+		if (nowStorage.size() < 2) {
 			cout << "Memory Was Not Enough" << endl;
 		}
-		return (storage.size() < 2);
+		return (nowStorage.size() < 2);
 	}
 	//스택에서 두 값을 꺼내고 계산하는 함수
 	auto stackCal(int(*f)(int a, int b)) -> void {
 		if (stackCheck())
 			return;
-		auto a = storage.top();
-		storage.pop();
-		auto b = storage.top();
-		storage.pop();
-		cout << a << ":" << b << endl;
-		storage.push(f(a,b));
+		auto a = nowStorage.top();
+		nowStorage.pop();
+		auto b = nowStorage.top();
+		nowStorage.pop();
+		nowStorage.push(f(a,b));
 	}
 	//스택에 값을 넣기위한 함수
 	auto stackInput(wchar_t data)-> void {
@@ -206,44 +208,44 @@ struct CodeInterpreter
 		{
 			int inputData=0;
 			cin >> inputData;
-			storage.push(inputData);
+			nowStorage.push(inputData);
 		}
 		else if (data == L'ㅎ')
 		{
 			wchar_t inputData;
 			wcin >> inputData;
-			storage.push(inputData);
+			nowStorage.push(inputData);
 		}
 		else if (data == L'ㅃ')
 		{
-			storage.push(storage.top());
+			nowStorage.push(nowStorage.top());
 		}
 		else if (data == L'ㅍ')
 		{
 			if (stackCheck())
 				return;
-			auto a = storage.top();
-			storage.pop();
-			auto b = storage.top();
-			storage.pop();
-			storage.push(a);
-			storage.push(b);
+			auto a = nowStorage.top();
+			nowStorage.pop();
+			auto b = nowStorage.top();
+			nowStorage.pop();
+			nowStorage.push(a);
+			nowStorage.push(b);
 		}
 		else {
-			storage.push(strokeCount(data));
+			nowStorage.push(strokeCount(data));
 		}
 
 	}
 	auto stackOut(wchar_t data) -> void {
 		if (data == L'ㅇ')
 		{
-			cout << storage.top();
+			cout << nowStorage.top();
 		}
 		if (data == L'ㅎ')
 		{
-			wcout << (wchar_t)storage.top();
+			wcout << (wchar_t)nowStorage.top();
 		}
-		storage.pop();
+		nowStorage.pop();
 	}
 	//명령 실행 코드
 	auto run(Char code, State& state) -> void{
@@ -374,20 +376,14 @@ int main()
 	CodeInterpreter interpre;
 	State st;
 	interpre.analyseHead(wcharToChar(L'밤'));
+	interpre.analyseHead(wcharToChar(L'밤'));
 	interpre.analyseHead(wcharToChar(L'밣'));
 	interpre.analyseHead(wcharToChar(L'따'));
-	interpre.analyseHead(wcharToChar(L'빠'));
-	interpre.analyseHead(wcharToChar(L'밣'));
-	interpre.analyseHead(wcharToChar(L'밟'));
+	interpre.analyseHead(wcharToChar(L'따'));
+
 
 	interpre.analyseHead(wcharToChar(L'맣'));
-	interpre.analyseHead(wcharToChar(L'맣'));
-	interpre.analyseHead(wcharToChar(L'맣'));
-	interpre.analyseHead(wcharToChar(L'맣'));
-	interpre.analyseHead(wcharToChar(L'맣'));
-	interpre.analyseHead(wcharToChar(L'맣'));
 
-	print(&st);
 	
 
 	string s;
