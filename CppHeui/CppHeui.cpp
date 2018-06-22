@@ -206,6 +206,10 @@ struct CodeInterpreter
 			wcin >> inputData;
 			storage.push(inputData);
 		}
+		else if (data == L'ㅃ')
+		{
+			storage.push(storage.top());
+		}
 		else {
 			storage.push(stackIndices(data));
 		}
@@ -262,6 +266,10 @@ struct CodeInterpreter
 			break;
 		case L'ㅁ':
 			stackOut(code.Tail);
+			break;
+
+		case L'ㅃ':
+			stackInput(code.Lead);
 			break;
 		default:
 			break;
@@ -338,11 +346,19 @@ int main()
 	init();
 	CodeInterpreter interpre;
 	State st;
-	interpre.analyseHead(wcharToChar(L'방'));
-	interpre.analyseHead(wcharToChar(L'방'));
-	interpre.analyseHead(wcharToChar(L'방'));
+	interpre.analyseHead(wcharToChar(L'밤'));
+	interpre.analyseHead(wcharToChar(L'밣'));
 	interpre.analyseHead(wcharToChar(L'따'));
-	interpre.analyseHead(wcharToChar(L'망'));
+	interpre.analyseHead(wcharToChar(L'빠'));
+	interpre.analyseHead(wcharToChar(L'밣'));
+	interpre.analyseHead(wcharToChar(L'밟'));
+
+	interpre.analyseHead(wcharToChar(L'맣'));
+	interpre.analyseHead(wcharToChar(L'맣'));
+	interpre.analyseHead(wcharToChar(L'맣'));
+	interpre.analyseHead(wcharToChar(L'맣'));
+	interpre.analyseHead(wcharToChar(L'맣'));
+	interpre.analyseHead(wcharToChar(L'맣'));
 
 	print(&st);
 	
