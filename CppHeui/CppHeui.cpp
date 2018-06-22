@@ -181,34 +181,48 @@ struct State : Printable
 };
 struct CodeInterpreter
 {
-	stack<int> & nowStorage;
+	unique_ptr<stack<int>> nowStorage;
 	vector< stack<int> > otherStorage;
-	auto changeStack(wchar_t index) -> void {
-		auto stackIndex = stackIndices(index);
-		nowStorage = otherStorage[stackIndex];
+
+	CodeInterpreter() {
+		otherStorage.push_back(stack<int>());
+		otherStorage.push_back(stack<int>());
+		otherStorage.push_back(stack<int>());
+		otherStorage.push_back(stack<int>());
+		otherStorage.push_back(stack<int>());
+		otherStorage.push_back(stack<int>());
+		otherStorage.push_back(stack<int>());
+		otherStorage.push_back(stack<int>());
+		otherStorage.push_back(stack<int>());
+		otherStorage.push_back(stack<int>());
+		nowStorage = unique_ptr<stack<int>>(&otherStorage[0]);
 	}
 
+	auto changeStack(wchar_t index) -> void {
+		auto stackIndex = stackIndices(index);
+		(*nowStorage) = otherStorage[stackIndex];
+	}
 	auto changeStack(wchar_t index, int data) -> void {
 		auto stackIndex = stackIndices(index);
-		nowStorage = otherStorage[stackIndex];
-		nowStorage.push(data);
+		(*nowStorage) = otherStorage[stackIndex];
+		nowStorage->push(data);
 	}
 	//스택에 값이 2개 이상 있는지 확인하는 함수
 	auto stackCheck() -> bool {
-		if (nowStorage.size() < 2) {
+		if ((*nowStorage).size() < 2) {
 			cout << "Memory Was Not Enough" << endl;
 		}
-		return (nowStorage.size() < 2);
+		return ((*nowStorage).size() < 2);
 	}
 	//스택에서 두 값을 꺼내고 계산하는 함수
 	auto stackCal(int(*f)(int a, int b)) -> void {
 		if (stackCheck())
 			return;
-		auto a = nowStorage.top();
-		nowStorage.pop();
-		auto b = nowStorage.top();
-		nowStorage.pop();
-		nowStorage.push(f(a,b));
+		auto a = nowStorage->top();
+		nowStorage->pop();
+		auto b = nowStorage->top();
+		nowStorage->pop();
+		nowStorage->push(f(a,b));
 	}
 	//스택에 값을 넣기위한 함수
 	auto stackInput(wchar_t data)-> void {
@@ -216,49 +230,49 @@ struct CodeInterpreter
 		{
 			int inputData=0;
 			cin >> inputData;
-			nowStorage.push(inputData);
+			nowStorage->push(inputData);
 		}
 		else if (data == L'ㅎ')
 		{
 			wchar_t inputData;
 			wcin >> inputData;
-			nowStorage.push(inputData);
+			nowStorage->push(inputData);
 		}
 		else if (data == L'ㅃ')
 		{
-			nowStorage.push(nowStorage.top());
+			nowStorage->push(nowStorage->top());
 		}
 		else if (data == L'ㅍ')
 		{
 			if (stackCheck())
 				return;
-			auto a = nowStorage.top();
-			nowStorage.pop();
-			auto b = nowStorage.top();
-			nowStorage.pop();
-			nowStorage.push(a);
-			nowStorage.push(b);
+			auto a = nowStorage->top();
+			nowStorage->pop();
+			auto b = nowStorage->top();
+			nowStorage->pop();
+			nowStorage->push(a);
+			nowStorage->push(b);
 		}
 		else {
-			nowStorage.push(strokeCount(data));
+			nowStorage->push(strokeCount(data));
 		}
 
 	}
 	auto stackOut(wchar_t data) -> void {
 		if (data == L'ㅇ')
 		{
-			cout << nowStorage.top();
+			cout << nowStorage->top();
 		}
 		if (data == L'ㅎ')
 		{
-			wcout << (wchar_t)nowStorage.top();
+			wcout << (wchar_t)nowStorage->top();
 		}
-		nowStorage.pop();
+		nowStorage->pop();
 	}
 	//명령 실행 코드
 	auto run(Char code, State& state) -> void{
-
-		
+		analyseHead(code);
+		analyseMiddle(code.Vowel,state);
 	}
 	//첫소리 분석 코드
 	auto analyseHead(Char code) noexcept -> bool {
@@ -306,10 +320,8 @@ struct CodeInterpreter
 			changeStack(code.Tail);
 			break;
 		case L'ㅆ':
-			auto data = nowStorage.top();
+			int data = nowStorage->top();
 			changeStack(code.Tail, data);
-			break;
-		default:
 			break;
 		}
 		return true;
@@ -390,14 +402,15 @@ int main()
 	init();
 	CodeInterpreter interpre;
 	State st;
-	interpre.analyseHead(wcharToChar(L'밤'));
-	interpre.analyseHead(wcharToChar(L'밤'));
-	interpre.analyseHead(wcharToChar(L'밣'));
-	interpre.analyseHead(wcharToChar(L'따'));
-	interpre.analyseHead(wcharToChar(L'따'));
+	interpre.run(wcharToChar(L'밤'), st);
+	interpre.run(wcharToChar(L'밤'), st);
+	interpre.run(wcharToChar(L'밣'), st);
+	interpre.run(wcharToChar(L'따'), st);
+	interpre.run(wcharToChar(L'따'), st);
 
 
-	interpre.analyseHead(wcharToChar(L'맣'));
+	interpre.run(wcharToChar(L'맣'), st);
+	
 
 	
 
