@@ -185,19 +185,17 @@ struct CodeInterpreter
 	vector< stack<int> > otherStorage;
 
 	CodeInterpreter() {
-		otherStorage.push_back(stack<int>());
-		otherStorage.push_back(stack<int>());
-		otherStorage.push_back(stack<int>());
-		otherStorage.push_back(stack<int>());
-		otherStorage.push_back(stack<int>());
-		otherStorage.push_back(stack<int>());
-		otherStorage.push_back(stack<int>());
-		otherStorage.push_back(stack<int>());
-		otherStorage.push_back(stack<int>());
-		otherStorage.push_back(stack<int>());
+		for (size_t i = 0; i < 24; i++)
+		{
+
+		//	otherStorage.push_back(stack<int>());
+		}
+		otherStorage.push_back( *(new stack<int>()));
 		nowStorage = unique_ptr<stack<int>>(&otherStorage[0]);
 	}
+	~CodeInterpreter() {
 
+	}
 	auto changeStack(wchar_t index) -> void {
 		auto stackIndex = stackIndices(index);
 		(*nowStorage) = otherStorage[stackIndex];
@@ -320,8 +318,10 @@ struct CodeInterpreter
 			changeStack(code.Tail);
 			break;
 		case L'ㅆ':
-			int data = nowStorage->top();
-			changeStack(code.Tail, data);
+			//int data = nowStorage->top();
+			//changeStack(code.Tail, data);
+			break;
+		default:
 			break;
 		}
 		return true;
@@ -402,7 +402,9 @@ int main()
 	init();
 	CodeInterpreter interpre;
 	State st;
+	
 	interpre.run(wcharToChar(L'밤'), st);
+	//interpre.run(wcharToChar(L'샆'), st);
 	interpre.run(wcharToChar(L'밤'), st);
 	interpre.run(wcharToChar(L'밣'), st);
 	interpre.run(wcharToChar(L'따'), st);
@@ -413,8 +415,9 @@ int main()
 	
 
 	
-
+	delete(&interpre.otherStorage[0]);
 	string s;
 	cin >> s;
+	cout << "END";
 	return 0;
 }
