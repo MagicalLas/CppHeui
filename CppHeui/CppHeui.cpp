@@ -185,17 +185,19 @@ struct CodeInterpreter
 	vector< stack<int> > otherStorage;
 
 	CodeInterpreter() :nowStorage(*(new stack<int>())){
+		delete &nowStorage;
 		for (size_t i = 0; i < 25; i++)
 		{
 			otherStorage.push_back(*(new stack<int>()));
 		}
+		nowStorage = otherStorage[0];
 	}
 	~CodeInterpreter(){
 		delete(&nowStorage);
 	}
 	auto changeStack(wchar_t index) -> void {
 		auto stackIndex = stackIndices(index);
-		nowStorage = (otherStorage[index]);
+		nowStorage = (otherStorage[stackIndex]);
 	}
 	auto changeStack(wchar_t index, int data) -> void {
 		auto stackIndex = stackIndices(index);
@@ -373,6 +375,15 @@ auto print(Printable* object) noexcept -> void {
 template<class T>
 class TD;
 
+struct Machine
+{
+	CodeInterpreter interpreter;
+	State machineState;
+	auto run() -> void {
+
+	}
+};
+
 //wchar_T를 분해하여 Char를 생성한다.
 //줄의 끝이라면('\n') border가 0이다.
 auto wcharToChar(wchar_t word) noexcept -> Char& {
@@ -400,15 +411,6 @@ int main()
 	CodeInterpreter interpre;
 	State st;
 	
-	interpre.run(wcharToChar(L'밤'), st);
-	//interpre.run(wcharToChar(L'샆'), st);
-	interpre.run(wcharToChar(L'밤'), st);
-	interpre.run(wcharToChar(L'밣'), st);
-	interpre.run(wcharToChar(L'따'), st);
-	interpre.run(wcharToChar(L'따'), st);
-
-
-	interpre.run(wcharToChar(L'맣'), st);
 	
 
 	
