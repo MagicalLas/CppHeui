@@ -181,46 +181,43 @@ struct State : Printable
 };
 struct CodeInterpreter
 {
-	unique_ptr<stack<int>> nowStorage;
+	stack<int>& nowStorage;
 	vector< stack<int> > otherStorage;
 
-	CodeInterpreter() {
-		for (size_t i = 0; i < 24; i++)
+	CodeInterpreter() :nowStorage(*(new stack<int>())){
+		for (size_t i = 0; i < 25; i++)
 		{
-
-		//	otherStorage.push_back(stack<int>());
+			otherStorage.push_back(*(new stack<int>()));
 		}
-		otherStorage.push_back( *(new stack<int>()));
-		nowStorage = unique_ptr<stack<int>>(&otherStorage[0]);
 	}
-	~CodeInterpreter() {
-
+	~CodeInterpreter(){
+		delete(&nowStorage);
 	}
 	auto changeStack(wchar_t index) -> void {
 		auto stackIndex = stackIndices(index);
-		(*nowStorage) = otherStorage[stackIndex];
+		nowStorage = (otherStorage[index]);
 	}
 	auto changeStack(wchar_t index, int data) -> void {
 		auto stackIndex = stackIndices(index);
-		(*nowStorage) = otherStorage[stackIndex];
-		nowStorage->push(data);
+		nowStorage = (otherStorage[index]);
+		nowStorage.push(data);
 	}
 	//스택에 값이 2개 이상 있는지 확인하는 함수
 	auto stackCheck() -> bool {
-		if ((*nowStorage).size() < 2) {
+		if (nowStorage.size() < 2) {
 			cout << "Memory Was Not Enough" << endl;
 		}
-		return ((*nowStorage).size() < 2);
+		return (nowStorage.size() < 2);
 	}
 	//스택에서 두 값을 꺼내고 계산하는 함수
 	auto stackCal(int(*f)(int a, int b)) -> void {
 		if (stackCheck())
 			return;
-		auto a = nowStorage->top();
-		nowStorage->pop();
-		auto b = nowStorage->top();
-		nowStorage->pop();
-		nowStorage->push(f(a,b));
+		auto a = nowStorage.top();
+		nowStorage.pop();
+		auto b = nowStorage.top();
+		nowStorage.pop();
+		nowStorage.push(f(a,b));
 	}
 	//스택에 값을 넣기위한 함수
 	auto stackInput(wchar_t data)-> void {
@@ -228,44 +225,44 @@ struct CodeInterpreter
 		{
 			int inputData=0;
 			cin >> inputData;
-			nowStorage->push(inputData);
+			nowStorage.push(inputData);
 		}
 		else if (data == L'ㅎ')
 		{
 			wchar_t inputData;
 			wcin >> inputData;
-			nowStorage->push(inputData);
+			nowStorage.push(inputData);
 		}
 		else if (data == L'ㅃ')
 		{
-			nowStorage->push(nowStorage->top());
+			nowStorage.push(nowStorage.top());
 		}
 		else if (data == L'ㅍ')
 		{
 			if (stackCheck())
 				return;
-			auto a = nowStorage->top();
-			nowStorage->pop();
-			auto b = nowStorage->top();
-			nowStorage->pop();
-			nowStorage->push(a);
-			nowStorage->push(b);
+			auto a = nowStorage.top();
+			nowStorage.pop();
+			auto b = nowStorage.top();
+			nowStorage.pop();
+			nowStorage.push(a);
+			nowStorage.push(b);
 		}
 		else {
-			nowStorage->push(strokeCount(data));
+			nowStorage.push(strokeCount(data));
 		}
 
 	}
 	auto stackOut(wchar_t data) -> void {
 		if (data == L'ㅇ')
 		{
-			cout << nowStorage->top();
+			cout << nowStorage.top();
 		}
 		if (data == L'ㅎ')
 		{
-			wcout << (wchar_t)nowStorage->top();
+			wcout << (wchar_t)nowStorage.top();
 		}
-		nowStorage->pop();
+		nowStorage.pop();
 	}
 	//명령 실행 코드
 	auto run(Char code, State& state) -> void{
@@ -415,7 +412,6 @@ int main()
 	
 
 	
-	delete(&interpre.otherStorage[0]);
 	string s;
 	cin >> s;
 	cout << "END";
