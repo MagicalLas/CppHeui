@@ -410,8 +410,7 @@ auto init() noexcept -> void {
 int main()
 {
 	init();
-	CodeInterpreter interpre;
-	State st;
+	Machine machine;
 	
 	
 
