@@ -379,8 +379,10 @@ struct Machine
 {
 	CodeInterpreter interpreter;
 	State machineState;
-	auto run() -> void {
-
+	auto run(vector<Char*> codeSpace) -> void {
+		while (true) {
+			interpreter.run(codeSpace[machineState.cx][machineState.cy], machineState);
+		}
 	}
 };
 
