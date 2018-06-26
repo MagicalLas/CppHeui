@@ -379,9 +379,9 @@ struct Machine
 {
 	CodeInterpreter interpreter;
 	State machineState;
-	auto run(vector<Char*> codeSpace) -> void {
+	auto run(Char codeSpace) -> void {
 		while (true) {
-			interpreter.run(codeSpace[machineState.cx][machineState.cy], machineState);
+			interpreter.run(codeSpace, machineState);
 		}
 	}
 };
@@ -411,10 +411,13 @@ int main()
 {
 	init();
 	Machine machine;
-	
-	
-
-	
+	while (true)
+	{
+		wchar_t input;
+		wcin >> input;
+		auto code = wcharToChar(input);
+		machine.run(code);
+	}
 	string s;
 	cin >> s;
 	cout << "END";
