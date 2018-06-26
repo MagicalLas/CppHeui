@@ -258,11 +258,11 @@ struct CodeInterpreter
 	auto stackOut(wchar_t data) -> void {
 		if (data == L'ㅇ')
 		{
-			cout << nowStorage.top();
+			cout << nowStorage.top() << endl;
 		}
 		if (data == L'ㅎ')
 		{
-			wcout << (wchar_t)nowStorage.top();
+			wcout << (wchar_t)nowStorage.top() << endl;
 		}
 		nowStorage.pop();
 	}
@@ -380,9 +380,7 @@ struct Machine
 	CodeInterpreter interpreter;
 	State machineState;
 	auto run(Char codeSpace) -> void {
-		while (true) {
 			interpreter.run(codeSpace, machineState);
-		}
 	}
 };
 
@@ -406,15 +404,20 @@ auto init() noexcept -> void {
 	cout << "Start of Programs" << endl;
 	setlocale(LC_ALL, "Korean");
 };
-
+auto inputCode(wchar_t& data) {
+	cout << ">";
+	wcin >> data;
+}
 int main()
 {
 	init();
 	Machine machine;
+
+	wchar_t input;
+
 	while (true)
 	{
-		wchar_t input;
-		wcin >> input;
+		inputCode(input);
 		auto code = wcharToChar(input);
 		machine.run(code);
 	}
