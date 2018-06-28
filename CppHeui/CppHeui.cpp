@@ -317,8 +317,8 @@ struct CodeInterpreter
 			changeStack(code.Tail);
 			break;
 		case L'ㅆ':
-			//int data = nowStorage->top();
-			//changeStack(code.Tail, data);
+			//int data = nowStorage.top();
+			changeStack(code.Tail, nowStorage.top());
 			break;
 		default:
 			break;
@@ -421,8 +421,6 @@ int main()
 		auto code = wcharToChar(input);
 		machine.run(code);
 	}
-	string s;
-	cin >> s;
 	cout << "END";
 	return 0;
 }
