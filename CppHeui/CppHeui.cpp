@@ -421,6 +421,5 @@ int main()
 		auto code = wcharToChar(input);
 		machine.run(code);
 	}
-	cout << "END";
 	return 0;
 }
