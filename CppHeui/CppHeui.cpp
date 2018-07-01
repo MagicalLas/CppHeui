@@ -175,11 +175,9 @@ struct State : Printable
 		cx = 0;
 		cy = 0;
 	}
-	/*
 	auto toString() noexcept -> string override {
 		return "STATE : " + to_string(cx) + ", " + to_string(cy);
 	}
-	*/
 };
 struct CodeInterpreter
 {
