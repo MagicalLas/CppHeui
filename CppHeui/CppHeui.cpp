@@ -166,6 +166,7 @@ struct Printable
 {
 	virtual auto toString()->string = 0;
 };
+
 //현재 상태
 struct State : Printable
 {
@@ -179,6 +180,7 @@ struct State : Printable
 		return "STATE : " + to_string(cx) + ", " + to_string(cy);
 	}
 };
+
 struct CodeInterpreter
 {
 	stack<int>& nowStorage;
